@@ -22,12 +22,12 @@ var port1,port2 string
 func init() {
 	prometheus.MustRegister(number_of_requests)
 	port1 = os.Getenv("PORT")
-	if port1 == "" {
+	if port1 == ""{
 		port1 = "8080"
 	}
 
     port2 = os.Getenv("PROM_PORT")
-	if port2 == "" {
+	if port2 == ""{
 		port2 = "9110"
 	}
 }
