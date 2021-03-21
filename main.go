@@ -8,7 +8,6 @@ import (
 	"strings"
 	"fmt"
 	"sort"
-	"log"
 )
 
 var (
@@ -36,7 +35,6 @@ func init() {
 
 func increment(res http.ResponseWriter, req *http.Request) {
 	if !strings.Contains(req.URL.String(),"favicon.ico") { //Check to avoid counting /favicon.ico request
-	log.Println("New http request")
 	fmt.Fprintf(res, "%s", "<table border=\"1\">")
 	fmt.Fprintf(res, "%s", "<th>Header Field</th>")
 	fmt.Fprintf(res, "%s", "<th>Header Value</th>")
