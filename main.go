@@ -8,6 +8,7 @@ import (
 	"strings"
 	"fmt"
 	"sort"
+	"log"
 )
 
 var (
@@ -69,8 +70,8 @@ func main() {
     serverMuxB.Handle("/metrics", promhttp.Handler())
 
     go func() {
-        http.ListenAndServe("0.0.0.0:"+port1, serverMuxA)
+        log.Fatal(http.ListenAndServe("0.0.0.0:"+port1, serverMuxA))
     }()
 
-    http.ListenAndServe("0.0.0.0:"+port2, serverMuxB)
+    log.Fatal(http.ListenAndServe("0.0.0.0:"+port2, serverMuxB))
 }
