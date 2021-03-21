@@ -8,6 +8,7 @@ import (
 	"strings"
 	"fmt"
 	"sort"
+	log "github.com/sirupsen/logrus"
 )
 
 var (
@@ -34,7 +35,11 @@ func init() {
 
 
 func increment(res http.ResponseWriter, req *http.Request) {
-	if !strings.Contains(req.URL.String(),"favicon.ico"){ //Check to avoid counting /favicon.ico request
+	if strings.Contains(req.URL.String(),"favicon.ico"){ //Check to avoid counting /favicon.ico request
+	    log.Info("Ignoring favicon requests in counter metrics")
+	}
+	else{
+	log.Info("Incoming HTTP request")
 	fmt.Fprintf(res, "%s", "<table border=\"1\">")
 	fmt.Fprintf(res, "%s", "<th>Header Field</th>")
 	fmt.Fprintf(res, "%s", "<th>Header Value</th>")
@@ -69,8 +74,8 @@ func main() {
     serverMuxB.Handle("/metrics", promhttp.Handler())
 
     go func() {
-        http.ListenAndServe("0.0.0.0:"+port1, serverMuxA)
+	    log.Fatal(http.ListenAndServe("0.0.0.0:"+port1, serverMuxA))
     }()
 
-    http.ListenAndServe("0.0.0.0:"+port2, serverMuxB)
+	log.Fatal(http.ListenAndServe("0.0.0.0:"+port2, serverMuxB))
 }
