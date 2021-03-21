@@ -8,7 +8,6 @@ import (
 	"strings"
 	"fmt"
 	"sort"
-	log "github.com/sirupsen/logrus"
 )
 
 var (
@@ -23,12 +22,12 @@ var port1,port2 string
 func init() {
 	prometheus.MustRegister(number_of_requests)
 	port1 = os.Getenv("PORT")
-	if port1 == ""{
+	if port1 == "" {
 		port1 = "8080"
 	}
 
     port2 = os.Getenv("PROM_PORT")
-	if port2 == ""{
+	if port2 == "" {
 		port2 = "9110"
 	}
 }
@@ -36,7 +35,6 @@ func init() {
 
 func increment(res http.ResponseWriter, req *http.Request) {
 	if !strings.Contains(req.URL.String(),"favicon.ico") { //Check to avoid counting /favicon.ico request
-	log.Info("Incoming HTTP request")
 	fmt.Fprintf(res, "%s", "<table border=\"1\">")
 	fmt.Fprintf(res, "%s", "<th>Header Field</th>")
 	fmt.Fprintf(res, "%s", "<th>Header Value</th>")
@@ -71,8 +69,8 @@ func main() {
     serverMuxB.Handle("/metrics", promhttp.Handler())
 
     go func() {
-	    http.ListenAndServe("0.0.0.0:"+port1, serverMuxA)
+        http.ListenAndServe("0.0.0.0:"+port1, serverMuxA)
     }()
 
-	http.ListenAndServe("0.0.0.0:"+port2, serverMuxB)
+    http.ListenAndServe("0.0.0.0:"+port2, serverMuxB)
 }
