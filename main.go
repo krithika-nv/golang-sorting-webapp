@@ -70,8 +70,8 @@ func main() {
     serverMuxB.Handle("/metrics", promhttp.Handler())
 
     go func() {
-        log.Fatal(http.ListenAndServe("0.0.0.0:"+port1, serverMuxA))
+        log.Fatal(http.ListenAndServeTLS("0.0.0.0:"+port1, "server.crt", "server.key", serverMuxA))
     }()
 
-    log.Fatal(http.ListenAndServe("0.0.0.0:"+port2, serverMuxB))
+    log.Fatal(http.ListenAndServeTLS("0.0.0.0:"+port2, "server.crt", "server.key", serverMuxB))
 }
