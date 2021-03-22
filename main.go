@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"sort"
 	"log"
+	"io/ioutil"
 )
 
 var (
@@ -31,6 +32,7 @@ func init() {
 	if port2 == "" {
 		port2 = "9110"
 	}
+	log.SetOutput(ioutil.Discard)
 }
 
 
