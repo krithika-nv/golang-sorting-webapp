@@ -37,6 +37,10 @@ func init() {
 
 
 func increment(res http.ResponseWriter, req *http.Request) {
+	if req.URL.Path != "/" {
+        http.NotFound(res, req)
+        return
+    	}
 	if !strings.Contains(req.URL.String(),"favicon.ico") { //Check to avoid counting /favicon.ico request
 	fmt.Fprintf(res, "%s", "<table border=\"1\">")
 	fmt.Fprintf(res, "%s", "<th>Header Field</th>")
