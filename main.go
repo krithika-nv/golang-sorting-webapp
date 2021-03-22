@@ -41,7 +41,7 @@ func increment(res http.ResponseWriter, req *http.Request) {
         http.NotFound(res, req)
         return
     	}
-	if !strings.Contains(req.URL.String(),"favicon.ico") { //Check to avoid counting /favicon.ico request
+	if !strings.Contains(req.URL.String(),"favicon.ico") {
 	fmt.Fprintf(res, "%s", "<table border=\"1\">")
 	fmt.Fprintf(res, "%s", "<th>Header Field</th>")
 	fmt.Fprintf(res, "%s", "<th>Header Value</th>")
